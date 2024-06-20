@@ -2,14 +2,22 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.request import Request
-from playerweb.models import User
-from playerweb.models import Music
+from playerweb.models import Music,RelUserMusic,User
 from playerweb.serializer import MusicSerializer,UserSerializer
 
 
 class MusicViewSet(viewsets.ModelViewSet):
-    queryset = Music.objects.all()
+    queryset = RelUserMusic.objects.all()
     serializer_class = MusicSerializer
+
+    def list(self, request):
+        userid = request.GET.get('userid', None)
+        if userid:
+            musicid = [item['musicid'] for item in list(self.queryset.filter(userid=userid).values('musicid'))]
+        print(musicid)
+        self.queryset = Music.objects.filter(id__in=musicid)
+        serializer = self.get_serializer(self.queryset, many=True)
+        return Response(serializer.data)
 
 class UserApi(viewsets.ViewSet):
     # 只有两个参数，默认路由后缀为方法名，可以添加第三个参数url_path='login'指定
@@ -27,7 +35,7 @@ class UserApi(viewsets.ViewSet):
             result['userinfo'] = serializer.data
             return Response(result)
         else:
-            result['msg'] = "登陆失败"
+            result['msg'] = "登陆失败，请检查用户名和密码"
             result['code'] = -1
             return Response(result)
     
