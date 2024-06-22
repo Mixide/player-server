@@ -1,10 +1,10 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.request import Request
-from playerweb.models import Music,RelUserMusic,User
-from playerweb.serializer import MusicSerializer,UserSerializer
-
+from playerWeb.models import Music,RelUserMusic,User
+from playerWeb.functions.serializer import MusicSerializer,UserSerializer
+from django.shortcuts import render, HttpResponse
+from django.views.generic.base import TemplateView
 
 class MusicViewSet(viewsets.ModelViewSet):
     queryset = RelUserMusic.objects.all()
@@ -19,6 +19,7 @@ class MusicViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(self.queryset, many=True)
         return Response(serializer.data)
 
+
 class UserApi(viewsets.ViewSet):
     # 只有两个参数，默认路由后缀为方法名，可以添加第三个参数url_path='login'指定
     @action(methods=['post'], detail=False)
@@ -28,7 +29,7 @@ class UserApi(viewsets.ViewSet):
         result = {
             "code": 200,
             "msg": "登录成功",
-            "userinfo":"",
+            "userinfo": "",
         }
         if password == request.data['password']:
             serializer = UserSerializer(User.objects.filter(username=request.data['username']).first())
@@ -50,3 +51,11 @@ class UserApi(viewsets.ViewSet):
             "body": ""
         }
         return Response(result)
+
+
+def hello(request):
+    return HttpResponse("Hello World")
+
+
+def ref(request):
+    return render(request, 'index.html')

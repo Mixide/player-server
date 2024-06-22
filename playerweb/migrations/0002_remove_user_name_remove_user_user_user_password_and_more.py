@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('playerweb', '0001_initial'),
+        ('playerWeb', '0001_initial'),
     ]
 
     operations = [
