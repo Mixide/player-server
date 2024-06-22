@@ -44,7 +44,7 @@ class UserApi(viewsets.ViewSet):
     def register(self, request):
         username = request.data['username']
         password = request.data['password']
-        User.objects.create(username=username, password=password)
+        User.objects.create(username=username, password=password,photo="http://localhost:8000/media/image/default.jpg")
         result = {
             "code": 200,
             "msg": "注册成功",

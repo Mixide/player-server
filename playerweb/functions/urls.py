@@ -9,5 +9,6 @@ router.register('music', views.MusicViewSet)
 router.register('user', views.UserApi, basename='userapi')
 urlpatterns = [
     path('', include(router.urls)),
-    path('upload/', upload.upload_file, name='upload_file'),
+    path('uploadmusic/', upload.upload_music, name='upload_music'),
+    path('uploadimage/', upload.upload_image, name='upload_image'),
 ]
