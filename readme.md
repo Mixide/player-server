@@ -1,1 +1,1 @@
-使用`python manage.py runserver`启动player的后端服务
+使用`python manage.py runserver`启动player的服务
