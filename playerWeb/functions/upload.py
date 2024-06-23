@@ -11,6 +11,8 @@ def upload_music(request):
         file = request.FILES['file']
         userid = request.POST.get('userid')
         file_path = os.path.join('playerWeb','media','audio', file.name)
+        if not os.path.exists(os.path.join('playerWeb','media','audio')):
+            os.makedirs(os.path.join('playerWeb','media','audio'))
         with open(file_path, 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
@@ -44,6 +46,8 @@ def upload_image(request):
         file = request.FILES['file']
         userid = request.POST.get('userid')
         file_path = os.path.join('playerWeb','media','image', file.name)
+        if not os.path.exists(os.path.join('playerWeb','media','image')):
+            os.makedirs(os.path.join('playerWeb','media','image'))
         with open(file_path, 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
