@@ -44,12 +44,19 @@ class UserApi(viewsets.ViewSet):
     def register(self, request):
         username = request.data['username']
         password = request.data['password']
-        User.objects.create(username=username, password=password,photo="http://localhost:8000/media/image/default.jpg")
-        result = {
-            "code": 200,
-            "msg": "注册成功",
-            "body": ""
-        }
+        if User.objects.filter(username=request.data['username']).first() != None:
+            result = {
+                "code": 200,
+                "msg": "注册失败, 用户名重复",
+                "body": ""
+            }
+        else:
+            User.objects.create(username=username, password=password,photo="http://localhost:8000/media/image/default.jpg")
+            result = {
+                "code": 200,
+                "msg": "注册成功",
+                "body": ""
+            }
         return Response(result)
 
 
