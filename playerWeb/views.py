@@ -8,6 +8,7 @@ from django.views.generic.base import TemplateView
 
 
 class MusicViewSet(viewsets.ModelViewSet):
+    """音乐空间 视图"""
     queryset = RelUserMusic.objects.all()
     serializer_class = MusicSerializer
 
@@ -22,6 +23,7 @@ class MusicViewSet(viewsets.ModelViewSet):
 
 
 class Discover(viewsets.ModelViewSet):
+    """发现音乐 视图"""
     queryset = Music.objects.all()
     serializer_class = MusicSerializer
 
@@ -32,9 +34,13 @@ class Discover(viewsets.ModelViewSet):
 
 
 class UserApi(viewsets.ViewSet):
+    """用户 视图"""
+
     # 只有两个参数，默认路由后缀为方法名，可以添加第三个参数url_path='login'指定
     @action(methods=['post'], detail=False)
     def login(self, request):
+        """用户登录"""
+
         # 对象使用.获取，字典使用['key']获取
         password = User.objects.filter(username=request.data['username']).first().password
         result = {
@@ -50,30 +56,28 @@ class UserApi(viewsets.ViewSet):
             result['msg'] = "登陆失败，请检查用户名和密码"
             result['code'] = -1
             return Response(result)
-    
+
     @action(methods=['post'], detail=False)
     def register(self, request):
+        """用户注册"""
+
         username = request.data['username']
         password = request.data['password']
-        if User.objects.filter(username=request.data['username']).first() != None:
+        # 若用户名已注册，报错
+        if User.objects.filter(username=request.data['username']).first():
             result = {
                 "code": 200,
                 "msg": "注册失败, 用户名重复",
                 "body": ""
             }
+        # 若用户名未注册，注册
         else:
-            User.objects.create(username=username, password=password,photo="http://localhost:8000/media/image/default.jpg")
+            User.objects.create(username=username,
+                                password=password,
+                                photo="http://localhost:8000/media/image/default.jpg")
             result = {
                 "code": 200,
                 "msg": "注册成功",
                 "body": ""
             }
         return Response(result)
-
-
-def hello(request):
-    return HttpResponse("Hello World")
-
-
-def ref(request):
-    return render(request, 'index.html')

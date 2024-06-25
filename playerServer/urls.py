@@ -21,12 +21,15 @@ from django.conf.urls.static import static
 from playerWeb import views
 from django.views.generic import RedirectView
 from django.views.generic import TemplateView
+
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='index.html')),  # 主页面，这里假设index.html是Vue打包后的入口文件
-    path('musicspace/', TemplateView.as_view(template_name='index.html')), 
     # path('admin/', admin.site.urls),
-    path('api/', include('playerWeb.functions.urls')),
-    path('index/', views.hello),
+    path('', TemplateView.as_view(template_name='index.html')),             # 主页面，index.html为Vue打包后的入口文件
+    path('musicspace/', TemplateView.as_view(template_name='index.html')),  # 用以解决数据更新后的页面刷新报错
+    path('login/', TemplateView.as_view(template_name='index.html')),
+    path('register/', TemplateView.as_view(template_name='index.html')),
+    path('discover/', TemplateView.as_view(template_name='index.html')),    # 用以解决数据更新后的页面刷新报错
+    path('api/', include('playerWeb.functions.urls')),                      # 数据交换相关路径，可查看后端数据返回情况
 ]
 
 if settings.DEBUG:
