@@ -16,7 +16,6 @@ class MusicViewSet(viewsets.ModelViewSet):
         userid = request.GET.get('userid', None)
         if userid:
             musicid = [item['musicid'] for item in list(self.queryset.filter(userid=userid).values('musicid'))]
-        print(musicid)
         self.queryset = Music.objects.filter(id__in=musicid)
         serializer = self.get_serializer(self.queryset, many=True)
         return Response(serializer.data)

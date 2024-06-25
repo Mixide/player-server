@@ -23,6 +23,13 @@ from django.views.generic import RedirectView
 from django.views.generic import TemplateView
 
 urlpatterns = [
+<<<<<<< HEAD
+=======
+    path('', TemplateView.as_view(template_name='index.html')),  # 主页面，这里假设index.html是Vue打包后的入口文件
+    path('musicspace/', TemplateView.as_view(template_name='index.html')), 
+    path('login/', TemplateView.as_view(template_name='index.html')),
+    path('register/', TemplateView.as_view(template_name='index.html')),
+>>>>>>> 14690c5e54ddeb25e2aa4e8182316ab755b1f5e3
     # path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html')),             # 主页面，index.html为Vue打包后的入口文件
     path('musicspace/', TemplateView.as_view(template_name='index.html')),  # 用以解决数据更新后的页面刷新报错
