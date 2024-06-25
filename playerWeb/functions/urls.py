@@ -7,6 +7,7 @@ from playerWeb.functions import upload,delete
 router = DefaultRouter()
 router.register('music', views.MusicViewSet)
 router.register('user', views.UserApi, basename='userapi')
+router.register('discover', views.Discover, basename='discoverapi')
 urlpatterns = [
     path('', include(router.urls)),
     path('uploadmusic/', upload.upload_music, name='upload_music'),

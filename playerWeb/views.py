@@ -6,6 +6,7 @@ from playerWeb.functions.serializer import MusicSerializer,UserSerializer
 from django.shortcuts import render, HttpResponse
 from django.views.generic.base import TemplateView
 
+
 class MusicViewSet(viewsets.ModelViewSet):
     queryset = RelUserMusic.objects.all()
     serializer_class = MusicSerializer
@@ -16,6 +17,16 @@ class MusicViewSet(viewsets.ModelViewSet):
             musicid = [item['musicid'] for item in list(self.queryset.filter(userid=userid).values('musicid'))]
         print(musicid)
         self.queryset = Music.objects.filter(id__in=musicid)
+        serializer = self.get_serializer(self.queryset, many=True)
+        return Response(serializer.data)
+
+
+class Discover(viewsets.ModelViewSet):
+    queryset = Music.objects.all()
+    serializer_class = MusicSerializer
+
+    def list(self, request):
+        self.queryset = Music.objects.all()
         serializer = self.get_serializer(self.queryset, many=True)
         return Response(serializer.data)
 
