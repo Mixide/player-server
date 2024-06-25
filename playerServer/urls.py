@@ -24,6 +24,8 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html')),  # 主页面，这里假设index.html是Vue打包后的入口文件
     path('musicspace/', TemplateView.as_view(template_name='index.html')), 
+    path('login/', TemplateView.as_view(template_name='index.html')),
+    path('register/', TemplateView.as_view(template_name='index.html')),
     # path('admin/', admin.site.urls),
     path('api/', include('playerWeb.functions.urls')),
     path('index/', views.hello),
