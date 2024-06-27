@@ -41,12 +41,19 @@ class UserApi(viewsets.ViewSet):
         """用户登录"""
 
         # 对象使用.获取，字典使用['key']获取
-        password = User.objects.filter(username=request.data['username']).first().password
+        user = User.objects.filter(username=request.data['username']).first()
         result = {
             "code": 200,
             "msg": "登录成功",
             "userinfo": "",
-        }
+        } 
+        if user == None:
+            result['msg'] = "登陆失败, 用户不存在"
+            result['code'] = -1
+            return Response(result)
+        
+        password = user.password
+
         if password == request.data['password']:
             serializer = UserSerializer(User.objects.filter(username=request.data['username']).first())
             result['userinfo'] = serializer.data

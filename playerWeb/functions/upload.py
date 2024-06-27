@@ -23,17 +23,6 @@ def upload_music(request):
         title = audio.get("TIT2", None)
         artist = audio.get("TPE1", None)
 
-        # 打印歌名和歌手信息
-        if title:
-            print("歌名:", title.text[0])
-        else:
-            print("歌名: 未找到")
-
-        if artist:
-            print("歌手:", artist.text[0])
-        else:
-            print("歌手: 未找到")
-
         new_music = Music.objects.create(artist=artist.text[0],
                                          name=title.text[0],
                                          url="http://localhost:8000/media/audio/"+file.name)

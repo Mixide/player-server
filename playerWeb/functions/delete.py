@@ -11,7 +11,6 @@ def delete_music(request):
         data = json.loads(request.body)
         userid = data.get('userid')
         musicid = data.get('musicid')
-        print(musicid)
         filename = Music.objects.filter(id=musicid).first().url.split('/')[-1]
         RelUserMusic.objects.filter(userid=userid, musicid=musicid).delete()
         Music.objects.filter(id=musicid).delete()
